@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JB Jewellery Collection - Home</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/navbar.css">
+    <link rel="stylesheet" href="css/footer.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-logo">
+                <a href="index.html">JB JEWELLERY</a>
+            </div>
+            <ul class="navbar-menu">
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="pages/catalog.html">Catalog</a></li>
+                <li><a href="pages/about.html">About</a></li>
+                <li><a href="pages/contact.html">Contact</a></li>
+            </ul>
+            <div class="navbar-right">
+                <input type="text" class="search-bar" id="searchInput" placeholder="Search products...">
+                <button class="search-btn" id="searchBtn">Search</button>
+                <a href="pages/cart.html" class="cart-icon">🛒 <span id="cartCount">0</span></a>
+                <div id="authButtons">
+                    <a href="pages/login.html" class="btn-login">Login</a>
+                    <a href="pages/register.html" class="btn-register">Register</a>
+                </div>
+                <div id="userProfile" style="display: none;">
+                    <button class="dropdown-btn" id="userDropdown">
+                        <span id="userName">User</span> ▼
+                    </button>
+                    <div class="dropdown-menu" id="dropdownMenu">
+                        <a href="pages/profile.html">My Account</a>
+                        <a href="pages/orders.html">My Orders</a>
+                        <a href="#" id="logoutBtn">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero-section">
+        <div class="hero-content">
+            <h1>Welcome to JB Jewellery Collection</h1>
+            <p>Exquisite jewellery crafted with elegance and precision</p>
+            <a href="pages/catalog.html" class="btn-primary">Shop Now</a>
+        </div>
+    </div>
+
+    <!-- Featured Products -->
+    <section class="featured-section">
+        <h2>Featured Products</h2>
+        <div class="products-grid" id="featuredProducts">
+            <!-- Products will be loaded here -->
+        </div>
+    </section>
+
+    <!-- Categories -->
+    <section class="categories-section">
+        <h2>Shop by Category</h2>
+        <div class="categories-grid" id="categoriesGrid">
+            <!-- Categories will be loaded here -->
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="cta-section">
+        <h2>Wholesale & Bulk Orders</h2>
+        <p>Looking for bulk orders? We offer special discounts for wholesale customers.</p>
+        <a href="pages/contact.html" class="btn-primary">Contact Us</a>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>About Us</h3>
+                <p>JB Jewellery Collection brings you the finest jewellery designs with premium quality.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="pages/catalog.html">Catalog</a></li>
+                    <li><a href="pages/about.html">About</a></li>
+                    <li><a href="pages/contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <p>Email: info@jbjewellery.com</p>
+                <p>Phone: +91-XXXX-XXXX-XX</p>
+            </div>
+            <div class="footer-section">
+                <h3>Follow Us</h3>
+                <div class="social-links">
+                    <a href="#">Facebook</a>
+                    <a href="#">Instagram</a>
+                    <a href="#">Twitter</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 JB Jewellery Collection. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="js/api-client.js"></script>
+    <script src="js/navbar.js"></script>
+    <script src="js/home.js"></script>
+</body>
+</html>
