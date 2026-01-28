@@ -36,14 +36,5 @@
       "src": "/(.*)",
       "dest": "/frontend/index.html"
     }
-  ],
-  "env": {
-    "SUPABASE_URL": "@supabase_url",
-    "SUPABASE_KEY": "@supabase_key",
-    "JWT_SECRET": "@jwt_secret",
-    "CASHFREE_KEY_ID": "@cashfree_key_id",
-    "CASHFREE_KEY_SECRET": "@cashfree_key_secret",
-    "ZOHO_MAIL_USER": "@zoho_mail_user",
-    "ZOHO_MAIL_PASSWORD": "@zoho_mail_password"
-  }
+  ]
 }
