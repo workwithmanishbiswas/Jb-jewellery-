@@ -37,10 +37,6 @@ app.register_blueprint(admin_bp, url_prefix='/api/admin')
 def health_check():
     return jsonify({'status': 'ok', 'message': 'JB Jewellery API is running'}), 200
 
-@app.route('/', methods=['GET'])
-def home():
-    return jsonify({'message': 'JB Jewellery Collection API'}), 200
-
 @app.errorhandler(404)
 def not_found(error):
     return jsonify({'error': 'Resource not found'}), 404
