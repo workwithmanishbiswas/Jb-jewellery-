@@ -46,7 +46,7 @@ function loadCategories() {
                 .slice(0, 6)
                 .map(
                     (category) => `
-                <a href="pages/catalog.html?category=${encodeURIComponent(category)}" class="category-card">
+                <a href="/pages/catalog.html?category=${encodeURIComponent(category)}" class="category-card">
                     <h3>${category}</h3>
                     <p>Shop Now →</p>
                 </a>
@@ -102,7 +102,7 @@ function addProductToCart(productId) {
     const token = localStorage.getItem('token');
     if (!token) {
         alert('Please login to add items to cart');
-        window.location.href = 'pages/login.html';
+        window.location.href = '/pages/login.html';
         return;
     }
 
@@ -125,7 +125,7 @@ function setupSearch() {
         searchBtn.addEventListener('click', () => {
             const query = searchInput.value;
             if (query.trim()) {
-                window.location.href = `pages/catalog.html?search=${encodeURIComponent(query)}`;
+                window.location.href = `/pages/catalog.html?search=${encodeURIComponent(query)}`;
             }
         });
 
@@ -133,7 +133,7 @@ function setupSearch() {
             if (e.key === 'Enter') {
                 const query = searchInput.value;
                 if (query.trim()) {
-                    window.location.href = `pages/catalog.html?search=${encodeURIComponent(query)}`;
+                    window.location.href = `/pages/catalog.html?search=${encodeURIComponent(query)}`;
                 }
             }
         });
