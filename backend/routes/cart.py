@@ -1,6 +1,13 @@
 from flask import Blueprint, request, jsonify
-from database.supabase_client import get_supabase
-from utils.jwt_handler import token_required
+try:
+    from database.supabase_client import get_supabase
+except ImportError:
+    from backend.database.supabase_client import get_supabase
+
+try:
+    from utils.jwt_handler import token_required
+except ImportError:
+    from backend.utils.jwt_handler import token_required
 from datetime import datetime
 
 cart_bp = Blueprint('cart', __name__)

@@ -1,7 +1,18 @@
 from flask import Blueprint, request, jsonify
-from database.supabase_client import get_supabase
-from utils.jwt_handler import token_required
-from utils.email_service import send_order_confirmation, send_admin_notification
+try:
+    from database.supabase_client import get_supabase
+except ImportError:
+    from backend.database.supabase_client import get_supabase
+
+try:
+    from utils.jwt_handler import token_required
+except ImportError:
+    from backend.utils.jwt_handler import token_required
+
+try:
+    from utils.email_service import send_order_confirmation, send_admin_notification
+except ImportError:
+    from backend.utils.email_service import send_order_confirmation, send_admin_notification
 from datetime import datetime
 import uuid
 

@@ -1,6 +1,13 @@
 from flask import Blueprint, request, jsonify
-from database.supabase_client import get_supabase
-from utils.jwt_handler import admin_required
+try:
+    from database.supabase_client import get_supabase
+except ImportError:
+    from backend.database.supabase_client import get_supabase
+
+try:
+    from utils.jwt_handler import admin_required
+except ImportError:
+    from backend.utils.jwt_handler import admin_required
 from datetime import datetime
 
 admin_bp = Blueprint('admin', __name__)

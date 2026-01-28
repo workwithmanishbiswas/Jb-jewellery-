@@ -1,8 +1,19 @@
 from flask import Blueprint, request, jsonify
 import bcrypt
-from database.supabase_client import get_supabase
-from utils.jwt_handler import create_token, verify_token
-from utils.email_service import send_email
+try:
+    from database.supabase_client import get_supabase
+except ImportError:
+    from backend.database.supabase_client import get_supabase
+
+try:
+    from utils.jwt_handler import create_token, verify_token
+except ImportError:
+    from backend.utils.jwt_handler import create_token, verify_token
+
+try:
+    from utils.email_service import send_email
+except ImportError:
+    from backend.utils.email_service import send_email
 
 auth_bp = Blueprint('auth', __name__)
 
