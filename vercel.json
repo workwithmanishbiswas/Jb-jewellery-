@@ -3,11 +3,6 @@
   "public": true,
   "buildCommand": "true",
   "outputDirectory": ".",
-  "functions": {
-    "api/index.py": {
-      "runtime": "python@3.11"
-    }
-  },
   "routes": [
     {
       "src": "/api/(.*)",
