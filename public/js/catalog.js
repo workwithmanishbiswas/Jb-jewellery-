@@ -46,7 +46,7 @@ function loadProducts(page = 1) {
                         <div class="product-price">₹${parseFloat(product.price).toLocaleString('en-IN')}</div>
                         <div class="product-actions">
                             <button class="add-to-cart-btn" onclick="addProductToCart(${product.id})">Add to Cart</button>
-                            <button class="wishlist-btn">❤️</button>
+                            <button class="wishlist-btn" title="Add to Wishlist"><span class="icon-heart"></span></button>
                         </div>
                     </div>
                 </div>

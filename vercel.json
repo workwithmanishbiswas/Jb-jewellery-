@@ -5,6 +5,13 @@
   "env": {},
   "routes": [
     {
+      "src": "/catalog(?:\\.html)?",
+      "status": 301,
+      "headers": {
+        "Location": "/"
+      }
+    },
+    {
       "src": "/api/(.*)",
       "dest": "api/index.py",
       "methods": ["GET", "POST", "PUT", "DELETE", "PATCH"]

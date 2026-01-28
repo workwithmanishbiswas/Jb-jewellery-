@@ -17,21 +17,20 @@
             </div>
             <ul class="navbar-menu">
                 <li><a href="/" class="active">Home</a></li>
-                <li><a href="catalog.html">Catalog</a></li>
                 <li><a href="about.html">About</a></li>
                 <li><a href="contact.html">Contact</a></li>
             </ul>
             <div class="navbar-right">
                 <input type="text" class="search-bar" id="searchInput" placeholder="Search products...">
                 <button class="search-btn" id="searchBtn">Search</button>
-                <a href="cart.html" class="cart-icon">🛒 <span id="cartCount">0</span></a>
+                <a href="cart.html" class="cart-icon"><span class="icon-cart"></span><span id="cartCount">0</span></a>
                 <div id="authButtons">
                     <a href="login.html" class="btn-login">Login</a>
                     <a href="register.html" class="btn-register">Register</a>
                 </div>
                 <div id="userProfile" style="display: none;">
                     <button class="dropdown-btn" id="userDropdown">
-                        <span id="userName">User</span> ▼
+                        <span id="userName">User</span><span class="icon-dropdown"></span>
                     </button>
                     <div class="dropdown-menu" id="dropdownMenu">
                         <a href="profile.html">My Account</a>
@@ -48,12 +47,12 @@
         <div class="hero-content">
             <h1>Welcome to JB Jewellery Collection</h1>
             <p>Exquisite jewellery crafted with elegance and precision</p>
-            <a href="catalog.html" class="btn-primary">Shop Now</a>
+            <a href="/#products" class="btn-primary">Shop Now</a>
         </div>
     </div>
 
     <!-- Featured Products -->
-    <section class="featured-section">
+    <section class="featured-section" id="products">
         <h2>Featured Products</h2>
         <div class="products-grid" id="featuredProducts">
             <!-- Products will be loaded here -->
@@ -85,7 +84,7 @@
             <div class="footer-section">
                 <h3>Quick Links</h3>
                 <ul>
-                    <li><a href="catalog.html">Catalog</a></li>
+                    <li><a href="/#products">Products</a></li>
                     <li><a href="about.html">About</a></li>
                     <li><a href="contact.html">Contact</a></li>
                 </ul>

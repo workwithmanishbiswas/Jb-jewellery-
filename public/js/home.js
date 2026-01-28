@@ -1,13 +1,25 @@
 // Home Page JavaScript
 document.addEventListener('DOMContentLoaded', () => {
+    handleSearch();
     loadFeaturedProducts();
     loadCategories();
     setupSearch();
+    updateCartCount();
 });
+
+function handleSearch() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const searchQuery = urlParams.get('search');
+    
+    if (searchQuery) {
+        document.getElementById('searchInput').value = searchQuery;
+        // Optionally filter products based on search
+    }
+}
 
 function loadFeaturedProducts() {
     apiClient
-        .getProducts(1, 6)
+        .getProducts(1, 12)
         .then((data) => {
             const container = document.getElementById('featuredProducts');
             if (!container) return;
@@ -24,7 +36,7 @@ function loadFeaturedProducts() {
                         <div class="product-price">₹${parseFloat(product.price).toLocaleString('en-IN')}</div>
                         <div class="product-actions">
                             <button class="add-to-cart-btn" onclick="addProductToCart(${product.id})">Add to Cart</button>
-                            <button class="wishlist-btn">❤️</button>
+                            <button class="wishlist-btn" title="Add to Wishlist"><span class="icon-heart"></span></button>
                         </div>
                     </div>
                 </div>
@@ -46,7 +58,7 @@ function loadCategories() {
                 .slice(0, 6)
                 .map(
                     (category) => `
-                <a href="catalog.html?category=${encodeURIComponent(category)}" class="category-card">
+                <a href="/#products" class="category-card">
                     <h3>${category}</h3>
                     <p>Shop Now →</p>
                 </a>
@@ -60,36 +72,61 @@ function loadCategories() {
                 style.setAttribute('data-category-styles', 'true');
                 style.textContent = `
                     .categories-section {
-                        padding: 3rem 2rem;
-                        background-color: #F8F9FA;
+                        padding: 4rem 2rem;
+                        background: linear-gradient(135deg, #F8F9FA 0%, #FFFFFF 100%);
+                        border-top: 2px solid #ECF0F1;
+                        border-bottom: 2px solid #ECF0F1;
                     }
                     
                     .categories-grid {
                         display: grid;
-                        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-                        gap: 1.5rem;
+                        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+                        gap: 2rem;
                         max-width: 1200px;
-                        margin: 2rem auto;
+                        margin: 3rem auto;
                     }
                     
                     .category-card {
                         background: linear-gradient(135deg, #F39C12 0%, #E67E22 100%);
                         color: white;
-                        padding: 2rem;
+                        padding: 2.5rem 1.5rem;
                         text-align: center;
-                        border-radius: 8px;
+                        border-radius: 12px;
                         text-decoration: none;
-                        transition: all 0.3s ease;
+                        transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+                        box-shadow: 0 4px 12px rgba(243, 156, 18, 0.2);
+                        position: relative;
+                        overflow: hidden;
+                    }
+                    
+                    .category-card::before {
+                        content: '';
+                        position: absolute;
+                        top: 0;
+                        left: -100%;
+                        width: 100%;
+                        height: 100%;
+                        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+                        transition: left 0.5s ease;
+                    }
+                    
+                    .category-card:hover::before {
+                        left: 100%;
                     }
                     
                     .category-card:hover {
-                        transform: translateY(-5px);
-                        box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+                        transform: translateY(-8px);
+                        box-shadow: 0 12px 24px rgba(243, 156, 18, 0.35);
                     }
                     
                     .category-card h3 {
-                        margin-bottom: 0.5rem;
+                        margin-bottom: 0.8rem;
                         color: white;
+                        font-size: 1.3rem;
+                    }
+                    
+                    .category-card p {
+                        color: rgba(255, 255, 255, 0.9);
                     }
                 `;
                 document.head.appendChild(style);
@@ -125,7 +162,7 @@ function setupSearch() {
         searchBtn.addEventListener('click', () => {
             const query = searchInput.value;
             if (query.trim()) {
-                window.location.href = `catalog.html?search=${encodeURIComponent(query)}`;
+                window.location.href = `/?search=${encodeURIComponent(query)}#products`;
             }
         });
 
@@ -133,7 +170,7 @@ function setupSearch() {
             if (e.key === 'Enter') {
                 const query = searchInput.value;
                 if (query.trim()) {
-                    window.location.href = `catalog.html?search=${encodeURIComponent(query)}`;
+                    window.location.href = `/?search=${encodeURIComponent(query)}#products`;
                 }
             }
         });
