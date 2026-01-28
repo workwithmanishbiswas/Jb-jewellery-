@@ -36,3 +36,7 @@ SUPABASE_KEY = "placeholder_key_replace_me"
 
 [agent]
 expertMode = true
+
+[[ports]]
+localPort = 5000
+externalPort = 80
