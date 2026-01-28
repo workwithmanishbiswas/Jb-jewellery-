@@ -1,7 +1,6 @@
 // API Client
-const API_BASE_URL = window.location.hostname === 'localhost' 
-    ? 'http://localhost:5000/api'
-    : `${window.location.protocol}//${window.location.hostname}/api`;
+// Use relative paths so it works on both localhost and production
+const API_BASE_URL = '/api';
 
 class APIClient {
     constructor() {
