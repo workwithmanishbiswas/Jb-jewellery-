@@ -4,48 +4,53 @@
   "builds": [
     {
       "src": "api/index.py",
-      "use": "@vercel/python",
-      "config": {
-        "maxLambdaSize": "15mb"
-      }
+      "use": "@vercel/python"
+    },
+    {
+      "src": "frontend/css",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "frontend/js",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "frontend/images",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "frontend/*.html",
+      "use": "@vercel/static"
     }
   ],
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "/api/index.py"
-    },
-    {
-      "src": "/pages/(.*\\.html)$",
-      "dest": "/frontend/pages/$1"
+      "dest": "api/index.py"
     },
     {
       "src": "/css/(.*)",
-      "dest": "/frontend/css/$1"
+      "dest": "frontend/css/$1"
     },
     {
       "src": "/js/(.*)",
-      "dest": "/frontend/js/$1"
+      "dest": "frontend/js/$1"
     },
     {
       "src": "/images/(.*)",
-      "dest": "/frontend/images/$1"
+      "dest": "frontend/images/$1"
     },
     {
-      "src": "/(.*\\.html)$",
-      "dest": "/frontend/$1"
+      "src": "/(index\\.html)?$",
+      "dest": "frontend/index.html"
     },
     {
-      "src": "/(.*\\.css)$",
-      "dest": "/frontend/$1"
-    },
-    {
-      "src": "/(.*\\.js)$",
-      "dest": "/frontend/$1"
+      "src": "/([^.]+)(\\.html)?$",
+      "dest": "frontend/$1.html"
     },
     {
       "src": "/(.*)",
-      "dest": "/frontend/index.html"
+      "dest": "frontend/$1"
     }
   ]
 }
