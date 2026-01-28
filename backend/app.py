@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, send_from_directory
 from flask_cors import CORS
 from dotenv import load_dotenv
 import os
@@ -17,7 +17,8 @@ from database.supabase_client import init_supabase
 
 load_dotenv()
 
-app = Flask(__name__)
+# Use 'public' as static folder to serve frontend files
+app = Flask(__name__, static_folder='../public', static_url_path='')
 app.config.from_object(Config)
 
 # Initialize CORS
@@ -37,9 +38,32 @@ app.register_blueprint(admin_bp, url_prefix='/api/admin')
 def health_check():
     return jsonify({'status': 'ok', 'message': 'JB Jewellery API is running'}), 200
 
+# Route to serve the frontend pages
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def serve_frontend(path):
+    if path != "" and os.path.exists(os.path.join(app.static_folder, path)):
+        return send_from_directory(app.static_folder, path)
+    elif path == "" or not "." in path:
+        # If it's a page request (no extension) or root, serve index.html or the named html file
+        if path == "":
+            return send_from_directory(app.static_folder, 'index.html')
+        
+        # Try serving path.html for clean URLs
+        html_file = f"{path}.html"
+        if os.path.exists(os.path.join(app.static_folder, html_file)):
+            return send_from_directory(app.static_folder, html_file)
+            
+        return send_from_directory(app.static_folder, 'index.html')
+    else:
+        return jsonify({'error': 'Resource not found'}), 404
+
 @app.errorhandler(404)
 def not_found(error):
-    return jsonify({'error': 'Resource not found'}), 404
+    # This handler might still be reached for some /api/ routes
+    if request.path.startswith('/api/'):
+        return jsonify({'error': 'Resource not found'}), 404
+    return serve_frontend(request.path)
 
 @app.errorhandler(500)
 def internal_error(error):
