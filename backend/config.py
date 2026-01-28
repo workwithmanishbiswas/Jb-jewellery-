@@ -17,12 +17,14 @@ class Config:
     CASHFREE_KEY_SECRET = os.getenv('CASHFREE_KEY_SECRET')
     CASHFREE_API_URL = os.getenv('CASHFREE_API_URL', 'https://sandbox.cashfree.com/pg')
     
-    # Email Configuration (Zoho)
+    # Email Configuration (Zoho OAuth2)
+    ZOHO_CLIENT_ID = os.getenv('ZOHO_CLIENT_ID')
+    ZOHO_CLIENT_SECRET = os.getenv('ZOHO_CLIENT_SECRET')
+    ZOHO_REFRESH_TOKEN = os.getenv('ZOHO_REFRESH_TOKEN')
     ZOHO_MAIL_USER = os.getenv('ZOHO_MAIL_USER')
-    ZOHO_MAIL_PASSWORD = os.getenv('ZOHO_MAIL_PASSWORD')
-    ZOHO_SMTP_SERVER = 'smtp.zoho.com'
-    ZOHO_SMTP_PORT = 465
+    ZOHO_ORG_ID = os.getenv('ZOHO_ORG_ID')
     
     # Flask Configuration
     DEBUG = os.getenv('DEBUG', 'False') == 'True'
     SECRET_KEY = os.getenv('SECRET_KEY', 'dev-secret-key')
+

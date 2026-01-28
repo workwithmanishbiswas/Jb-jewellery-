@@ -2,31 +2,87 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import os
+import requests
+import json
 from dotenv import load_dotenv
+from datetime import datetime, timedelta
 
 load_dotenv()
 
-def send_email(to_email, subject, body, is_html=False):
-    """Send email using Zoho Mail"""
+# Global variable to store access token
+_zoho_access_token = None
+_token_expiry = None
+
+def get_zoho_access_token():
+    """Get access token from Zoho using refresh token"""
+    global _zoho_access_token, _token_expiry
+    
+    # Check if token is still valid
+    if _zoho_access_token and _token_expiry and datetime.now() < _token_expiry:
+        return _zoho_access_token
+    
     try:
-        sender_email = os.getenv('ZOHO_MAIL_USER')
-        sender_password = os.getenv('ZOHO_MAIL_PASSWORD')
+        client_id = os.getenv('ZOHO_CLIENT_ID')
+        client_secret = os.getenv('ZOHO_CLIENT_SECRET')
+        refresh_token = os.getenv('ZOHO_REFRESH_TOKEN')
         
-        message = MIMEMultipart('alternative')
-        message['Subject'] = subject
-        message['From'] = sender_email
-        message['To'] = to_email
+        token_url = 'https://accounts.zoho.in/oauth/v2/token'
         
-        if is_html:
-            message.attach(MIMEText(body, 'html'))
+        payload = {
+            'grant_type': 'refresh_token',
+            'client_id': client_id,
+            'client_secret': client_secret,
+            'refresh_token': refresh_token
+        }
+        
+        response = requests.post(token_url, data=payload)
+        
+        if response.status_code == 200:
+            token_data = response.json()
+            _zoho_access_token = token_data.get('access_token')
+            # Token expires in 1 hour, set expiry to 55 minutes to be safe
+            _token_expiry = datetime.now() + timedelta(minutes=55)
+            return _zoho_access_token
         else:
-            message.attach(MIMEText(body, 'plain'))
+            print(f"Failed to get access token: {response.text}")
+            return None
+    except Exception as e:
+        print(f"Error getting access token: {str(e)}")
+        return None
+
+def send_email(to_email, subject, body, is_html=False):
+    """Send email using Zoho Mail OAuth2"""
+    try:
+        access_token = get_zoho_access_token()
+        if not access_token:
+            raise Exception("Failed to get Zoho access token")
         
-        with smtplib.SMTP_SSL('smtp.zoho.com', 465) as server:
-            server.login(sender_email, sender_password)
-            server.sendmail(sender_email, to_email, message.as_string())
+        sender_email = os.getenv('ZOHO_MAIL_USER')
+        org_id = os.getenv('ZOHO_ORG_ID')
         
-        return True
+        # Using Zoho Mail API v1
+        url = f'https://mail.zoho.com/api/accounts/{org_id}/messages'
+        
+        headers = {
+            'Authorization': f'Bearer {access_token}',
+            'Content-Type': 'application/json'
+        }
+        
+        payload = {
+            'to': [{'email': to_email}],
+            'from': {'email': sender_email},
+            'subject': subject,
+            'content': body,
+            'contentType': 'html' if is_html else 'plain'
+        }
+        
+        response = requests.post(url, json=payload, headers=headers)
+        
+        if response.status_code in [200, 201]:
+            return True
+        else:
+            print(f"Email API error: {response.text}")
+            return False
     except Exception as e:
         print(f"Email send failed: {str(e)}")
         return False
