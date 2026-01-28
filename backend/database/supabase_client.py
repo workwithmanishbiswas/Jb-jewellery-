@@ -10,7 +10,11 @@ def init_supabase():
     global supabase
     url = os.getenv('SUPABASE_URL')
     key = os.getenv('SUPABASE_KEY')
-    supabase = create_client(url, key)
+    try:
+        supabase = create_client(url, key)
+    except Exception as e:
+        print(f"Warning: Could not initialize Supabase: {e}")
+        supabase = None
     return supabase
 
 def get_supabase():

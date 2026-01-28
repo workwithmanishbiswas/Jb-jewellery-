@@ -33,3 +33,6 @@ packages = ["cargo", "libiconv", "rustc"]
 [userenv.shared]
 SUPABASE_URL = "https://placeholder-url.supabase.co"
 SUPABASE_KEY = "placeholder_key_replace_me"
+
+[agent]
+expertMode = true
